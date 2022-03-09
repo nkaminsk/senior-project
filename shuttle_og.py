@@ -1,5 +1,5 @@
 # import all the relevant classes
-from kivymd.app import App
+from kivymd.app import MDApp
 
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -97,7 +97,11 @@ class signupWindow(Screen):
       
 # class to display validation result
 class logDataWindow(Screen):
-    pass
+    data = {
+        "language-python": "Python",
+        "language-ruby": "Ruby"
+        }
+    
   
 # class for managing screens
 class windowManager(ScreenManager):
@@ -111,14 +115,20 @@ sm = windowManager()
 users=pd.read_csv('login.csv')
   
 # adding screens
-sm.add_widget(loginWindow(name='login'))
-sm.add_widget(signupWindow(name='signup'))
-sm.add_widget(logDataWindow(name='logdata'))
+
   
 # class that builds gui
-class loginMain(App):
+class loginMain(MDApp):
+    def __init__(self, **kwargs):
+        self.title = "Shuttle"
+        super().__init__(**kwargs)
+
     def build(self):
-        mapview = MapView(zoom=10, lat=36, lon=-115)
+        self.theme_cls.theme_style = "Dark"
+        self.root = Builder.load_file('login.kv')
+        sm.add_widget(loginWindow(name='login'))
+        sm.add_widget(signupWindow(name='signup'))
+        sm.add_widget(logDataWindow(name='logdata'))
         return sm
 
   
