@@ -76,6 +76,10 @@ class signupWindow(Screen):
     name2 = ObjectProperty(None)
     email = ObjectProperty(None)
     pwd = ObjectProperty(None)
+
+    def back(self):
+        sm.current = 'login'
+
     def signupbtn(self):
   
         # creating a DataFrame of the info
