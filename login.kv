@@ -1,3 +1,4 @@
+
 # there are three screens
 windowManager:
     loginWindow:
@@ -99,6 +100,8 @@ windowManager:
 <logDataWindow>:
     #info : info
     MDNavigationLayout:
+
+    #Manages the primary screen data
         ScreenManager:
             MDScreen:
                 MDBoxLayout:
@@ -107,30 +110,52 @@ windowManager:
                         title: "Navigation Drawer Test"
                         elevation: 10
                         left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
-                    MapView:
-                        lat: 38.0
-                        lon: -115.0
-                        zoom: 8
-                        size_hint: 1, 1
+                    MDCard:
+                        RelativeLayout:
+                            MapView:
+                                id: mapview
+                                lat: root.latitude
+                                lon: root.longitude
+                                zoom: 5
+                            
+                                MapMarkerPopup:
+                                    source: "marker.png"
+                                    lat: 38.0
+                                    lon: -115.0
+                                MapMarkerPopup:
+                                    source: "marker.png"
+                                    lat: 11
+                                    lon: 11
+                                    Button:
+                                        on_release:
+                                            print("hey")
+
+                            MDToolbar:
+                                Button:
+                                    text: "Longitude: {}".format(mapview.lon)
+                                    on_release: mapview.center_on(50.6394, 3.057)
+                                Button:
+                                    text: "Latitude: {}".format(mapview.lat)
+                                    on_release: mapview.center_on(-33.867, 151.206)
                     MDCard:
                         ScrollView:
                             MDList:
                                 OneLineListItem:
                                     id: item1
-                                    text: "Test Line Item #1"
+                                    text: "Test Line Item #51"
                                 OneLineListItem:
-                                    id: item1
-                                    text: "Test Line Item #2"
+                                    id: item2
+                                    text: "Test Line Item #52"
                                 OneLineListItem:
-                                    id: item1
-                                    text: "Test Line Item #3"
+                                    id: item3
+                                    text: "Test Line Item #53"
                                 OneLineListItem:
-                                    id: item1
-                                    text: "Test Line Item #4"
+                                    id: item4
+                                    text: "Test Line Item #54"
                             
 
                    
-
+    #Manages the content of the drawer
         MDNavigationDrawer:
             id: nav_drawer
             orientation: "vertical"
@@ -149,16 +174,16 @@ windowManager:
                 orientation: "vertical"
                 MDList:
                     OneLineListItem:
-                        id: item1
+                        id: menuitem1
                         text: "Test Line Item #1"
                     OneLineListItem:
-                        id: item1
+                        id: menuitem2
                         text: "Test Line Item #2"
                     OneLineListItem:
-                        id: item1
+                        id: menuitem3
                         text: "Test Line Item #3"
                     OneLineListItem:
-                        id: item1
+                        id: menuitem4
                         text: "Test Line Item #4"
             
 

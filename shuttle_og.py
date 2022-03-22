@@ -3,10 +3,11 @@ from kivymd.app import MDApp
 
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty, StringProperty, ListProperty
+from kivy.properties import ObjectProperty, StringProperty, ListProperty, NumericProperty
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
-
+from kivy.clock import Clock
+import random
 
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.theming import ThemableBehavior, ThemeManager
@@ -16,12 +17,15 @@ from kivymd.uix.list import OneLineIconListItem, MDList
 
 import pandas as pd
 
-from kivy_garden.mapview import MapView
+from kivy_garden.mapview import MapView, MapSource
 from plyer import gps
 import plyer
 
 
 from pathlib import Path 
+
+DECIMAL_PRECISION = 2
+
 """
 df = pd.DataFrame({'Name': ['Raphael', 'Donatello'],
                    'Email': ['red', 'purple'],
@@ -42,11 +46,6 @@ name_dict = {
 df = pd.DataFrame(name_dict)
 
 """
-
-
-
-
-
 
 # class to call the popup function
 class PopupWindow(Widget):
@@ -115,12 +114,37 @@ class signupWindow(Screen):
       
 # class to display validation result
 class logDataWindow(Screen):
-   
-    data = {
-        "language-python": "Python",
-        "language-ruby": "Ruby"
-        }
+
+    latitude = NumericProperty(50) #GET COORDS
+    longitude = NumericProperty(3)
+
+    def decimal_precision(self, val, precision):
+        # foo process
+        return val
+
+    # Getting latitude and longitude (at the moment just random stuff
+    def get_gps_latitude(self):
+        self.latitude = self.decimal_precision(0.01 * random.random() + 50.6394, DECIMAL_PRECISION)
+        return self.latitude # rounding
+
+    def get_gps_longitude(self):
+        self.longitude = self.decimal_precision(0.01 * random.random() + 50.6394, DECIMAL_PRECISION)
+        return self.longitude
+
+    def update(self, _):
+        self.latitude = self.get_gps_latitude()
+        self.longitude = self.get_gps_longitude()
+        #self.ids.mapview.center_on(self.latitude, self.longitude)
+
+    def on_pre_enter(self):
+        print("here")
+        Clock.schedule_interval(self.update, 1)
     
+
+
+
+class displayWindow(Screen):
+    pass
   
 # class for managing screens
 class windowManager(ScreenManager):
@@ -148,6 +172,7 @@ class loginMain(MDApp):
         sm.add_widget(loginWindow(name='login'))
         sm.add_widget(signupWindow(name='signup'))
         sm.add_widget(logDataWindow(name='logdata'))
+
         return sm
 
   
