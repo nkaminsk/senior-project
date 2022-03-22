@@ -3,22 +3,30 @@ from kivymd.app import MDApp
 
 from kivy.uix.widget import Widget
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty
+from kivy.properties import ObjectProperty, StringProperty, ListProperty
 from kivy.lang import Builder
 from kivy.uix.popup import Popup
-from kivy.uix.floatlayout import FloatLayout
+
+
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.theming import ThemableBehavior, ThemeManager
+from kivymd.uix.boxlayout import MDBoxLayout
+from kivymd.uix.list import OneLineIconListItem, MDList
+
+
 import pandas as pd
 
 from kivy_garden.mapview import MapView
 from plyer import gps
 import plyer
 
-"""
-from pathlib import Path 
 
+from pathlib import Path 
+"""
 df = pd.DataFrame({'Name': ['Raphael', 'Donatello'],
                    'Email': ['red', 'purple'],
-                   'Password': ['sai', 'bo staff']})
+                   'Password': ['sai', 'bo staff'],
+                   'Token': [1, 2]})
 
 filepath = Path('login.csv')  
 filepath.parent.mkdir(parents=True, exist_ok=True)  
@@ -27,11 +35,17 @@ df.to_csv(filepath)
 name_dict = {
             'Name': ['a','b','c','d'],
             'Email': [90,80,95,20],
-            'Password': ['a', 'b', 'c', 'd']
+            'Password': ['a', 'b', 'c', 'd'],
+            'Token': [1,2,3,4]
           }
 
 df = pd.DataFrame(name_dict)
+
 """
+
+
+
+
 
 
 # class to call the popup function
@@ -40,7 +54,7 @@ class PopupWindow(Widget):
         popFun()
   
 # class to build GUI for a popup window
-class P(FloatLayout):
+class P(MDFloatLayout):
     pass
   
 # function that displays the content
@@ -83,8 +97,8 @@ class signupWindow(Screen):
     def signupbtn(self):
   
         # creating a DataFrame of the info
-        user = pd.DataFrame([[self.name2.text, self.email.text, self.pwd.text]],
-                            columns = ['Name', 'Email', 'Password'])
+        user = pd.DataFrame([[self.name2.text, self.email.text, self.pwd.text, 1]],
+                            columns = ['Name', 'Email', 'Password', 'Token'])
         if self.email.text != "":
             if self.email.text not in users['Email'].unique():
   
@@ -101,6 +115,7 @@ class signupWindow(Screen):
       
 # class to display validation result
 class logDataWindow(Screen):
+   
     data = {
         "language-python": "Python",
         "language-ruby": "Ruby"

@@ -3,20 +3,14 @@ windowManager:
     loginWindow:
     signupWindow:
     logDataWindow:
-  
+ 
 # GUI for the login window
 <loginWindow>:
     email : email
     pwd : pwd
     MDFloatLayout:
+        orientation: "vertical"
         size: root.width, root.height
-
-        MDToolbar:
-            pos_hint: {"top" : 1}
-            left_action_items: [["menu", lambda x: None]]
-            md_bg_color: app.theme_cls.primary_color
-            elevation:10
-
 
         Label:
             text : "EMAIL: "
@@ -57,12 +51,6 @@ windowManager:
     email : email
     pwd : pwd
     MDFloatLayout:
-
-        MDToolbar:
-            pos_hint: {"top" : 1}
-            left_action_items: [["menu", lambda x: None]]
-            md_bg_color: app.theme_cls.primary_color
-            elevation:10
 
         Label:
             text : "NAME: "
@@ -109,44 +97,71 @@ windowManager:
   
 # GUI to show validation result
 <logDataWindow>:
+    #info : info
+    MDNavigationLayout:
+        ScreenManager:
+            MDScreen:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDToolbar:
+                        title: "Navigation Drawer Test"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MapView:
+                        lat: 38.0
+                        lon: -115.0
+                        zoom: 8
+                        size_hint: 1, 1
+                    MDCard:
+                        ScrollView:
+                            MDList:
+                                OneLineListItem:
+                                    id: item1
+                                    text: "Test Line Item #1"
+                                OneLineListItem:
+                                    id: item1
+                                    text: "Test Line Item #2"
+                                OneLineListItem:
+                                    id: item1
+                                    text: "Test Line Item #3"
+                                OneLineListItem:
+                                    id: item1
+                                    text: "Test Line Item #4"
+                            
 
-    info : info
-    MDFloatLayout:
+                   
 
-        MapView:
-            lat: 38.0
-            lon: -115.0
-            zoom: 8
+        MDNavigationDrawer:
+            id: nav_drawer
+            orientation: "vertical"
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint_y: None
+                height: avatar.height
+                
+                Image:
+                    id: avatar
+                    size_hint: None, None
+                    size: "56dp", "56dp"
+                    source: "data/logo/kivy-icon-256.png"
 
-        MDToolbar:
-            pos_hint: {"top" : 1}
-            left_action_items: [["menu", lambda x: None]]
-            md_bg_color: app.theme_cls.primary_color
-            elevation:10
+            ScrollView:
+                orientation: "vertical"
+                MDList:
+                    OneLineListItem:
+                        id: item1
+                        text: "Test Line Item #1"
+                    OneLineListItem:
+                        id: item1
+                        text: "Test Line Item #2"
+                    OneLineListItem:
+                        id: item1
+                        text: "Test Line Item #3"
+                    OneLineListItem:
+                        id: item1
+                        text: "Test Line Item #4"
+            
 
-        MDFloatingActionButtonSpeedDial:
-            data: root.data
-            root_button_anim: True
-
-        Label:
-            id : info
-            size_hint : 0.8, 0.2
-            pos_hint : {"x" : 0.15, "top" : 0.8}
-            text : "SUCCESSFULLY LOGGED IN"
-        Button:
-            text : "Login"
-            size_hint : 0.4, 0.1
-            pos_hint : {"x" : 0.33, "top" : 0.55}
-            on_release: 
-                app.root.current = 'login'
-                root.manager.transition.direction = "down"
-        Button:
-            text : "Create new account"
-            size_hint : 0.4, 0.1
-            pos_hint : {"x" : 0.33, "top" : 0.4}
-            on_release: 
-                app.root.current = 'signup'
-                root.manager.transition.direction = "down"
   
   
 # GUI for pop up window
