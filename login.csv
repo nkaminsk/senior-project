@@ -1,4 +1,5 @@
-Name,Email,Password
-test,test@test.com,test
-testy,testy,testy
-TESTER,tester@test.com,test
+Name,Email,Password,Token
+test,test@test.com,test,1
+,,,
+test,testy@testy.com,testy,2
+testy,testyer@testy.com,testyer,3
