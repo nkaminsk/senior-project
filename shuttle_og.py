@@ -172,7 +172,7 @@ class loginMain(MDApp):
         sm.add_widget(loginWindow(name='login'))
         sm.add_widget(signupWindow(name='signup'))
         sm.add_widget(logDataWindow(name='logdata'))
-
+        sm.add_widget(displayWindow(name='display'))
         return sm
 
   

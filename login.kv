@@ -4,6 +4,7 @@ windowManager:
     loginWindow:
     signupWindow:
     logDataWindow:
+    displayWindow:
  
 # GUI for the login window
 <loginWindow>:
@@ -140,9 +141,13 @@ windowManager:
                     MDCard:
                         ScrollView:
                             MDList:
+                                id: ride_list
                                 OneLineListItem:
                                     id: item1
                                     text: "Test Line Item #51"
+                                    on_release:
+                                        root.manager.transition.direction = "up"
+                                        app.root.current = 'display'
                                 OneLineListItem:
                                     id: item2
                                     text: "Test Line Item #52"
@@ -152,7 +157,42 @@ windowManager:
                                 OneLineListItem:
                                     id: item4
                                     text: "Test Line Item #54"
-                            
+
+                                ThreeLineIconListItem:
+                                    text: "Three-line item with avatar"
+                                    secondary_text: "Secondary text here"
+                                    tertiary_text: "fit more text than usual"
+
+                                    IconLeftWidget:
+                                        icon: "language-python"
+                                ThreeLineIconListItem:
+                                    text: "Three-line item with avatar"
+                                    secondary_text: "Secondary text here"
+                                    tertiary_text: "fit more text than usual"
+
+                                    IconLeftWidget:
+                                        icon: "language-python"
+                                ThreeLineIconListItem:
+                                    text: "Three-line item with avatar"
+                                    secondary_text: "Secondary text here"
+                                    tertiary_text: "fit more text than usual"
+
+                                    IconLeftWidget:
+                                        icon: "language-python"
+                                ThreeLineIconListItem:
+                                    text: "Three-line item with avatar"
+                                    secondary_text: "Secondary text here"
+                                    tertiary_text: "fit more text than usual"
+
+                                    IconLeftWidget:
+                                        icon: "language-python"
+                                ThreeLineIconListItem:
+                                    text: "Three-line item with avatar"
+                                    secondary_text: "Secondary text here"
+                                    tertiary_text: "fit more text than usual"
+
+                                    IconLeftWidget:
+                                        icon: "language-python"
 
                    
     #Manages the content of the drawer
@@ -173,9 +213,13 @@ windowManager:
             ScrollView:
                 orientation: "vertical"
                 MDList:
+                    id: nav_list
                     OneLineListItem:
                         id: menuitem1
                         text: "Test Line Item #1"
+                        on_release: 
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'display'
                     OneLineListItem:
                         id: menuitem2
                         text: "Test Line Item #2"
@@ -195,4 +239,30 @@ windowManager:
         text : "Please enter valid information"
         size_hint : 0.2, 0.1
         pos_hint : {"x" : 0.3, "top" : 0.8}
+
+
+
+
+<displayWindow>:
+    MDFloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : email
+            multiline :False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
 
