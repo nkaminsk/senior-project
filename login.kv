@@ -100,8 +100,10 @@ windowManager:
 # GUI to show validation result
 <logDataWindow>:
     #info : info
-    MDNavigationLayout:
 
+    MDNavigationLayout:
+            #Manages the content of the drawer
+        
     #Manages the primary screen data
         ScreenManager:
             MDScreen:
@@ -121,10 +123,6 @@ windowManager:
                             
                                 MapMarkerPopup:
                                     source: "marker.png"
-                                    lat: 38.0
-                                    lon: -115.0
-                                MapMarkerPopup:
-                                    source: "marker.png"
                                     lat: 11
                                     lon: 11
                                     Button:
@@ -139,63 +137,24 @@ windowManager:
                                     text: "Latitude: {}".format(mapview.lat)
                                     on_release: mapview.center_on(-33.867, 151.206)
                     MDCard:
-                        ScrollView:
-                            MDList:
-                                id: ride_list
-                                OneLineListItem:
-                                    id: item1
-                                    text: "Test Line Item #51"
-                                    on_release:
-                                        root.manager.transition.direction = "up"
-                                        app.root.current = 'display'
-                                OneLineListItem:
-                                    id: item2
-                                    text: "Test Line Item #52"
-                                OneLineListItem:
-                                    id: item3
-                                    text: "Test Line Item #53"
-                                OneLineListItem:
-                                    id: item4
-                                    text: "Test Line Item #54"
+                        MDFloatLayout:
+                            orientation: "vertical"
+                            ScrollView:
+                                MDList:
+                                    id: ride_list
+                                
+                                    ThreeLineIconListItem:
+                                        text: "Three-line item with avatar"
+                                        secondary_text: "Secondary text here"
+                                        tertiary_text: "fit more text than usual"
 
-                                ThreeLineIconListItem:
-                                    text: "Three-line item with avatar"
-                                    secondary_text: "Secondary text here"
-                                    tertiary_text: "fit more text than usual"
+                                        IconLeftWidget:
+                                            icon: "language-python"
+                            MDFloatingActionButtonSpeedDial:
+                                data: root.data
+                                root_button_anim: True
+                    
 
-                                    IconLeftWidget:
-                                        icon: "language-python"
-                                ThreeLineIconListItem:
-                                    text: "Three-line item with avatar"
-                                    secondary_text: "Secondary text here"
-                                    tertiary_text: "fit more text than usual"
-
-                                    IconLeftWidget:
-                                        icon: "language-python"
-                                ThreeLineIconListItem:
-                                    text: "Three-line item with avatar"
-                                    secondary_text: "Secondary text here"
-                                    tertiary_text: "fit more text than usual"
-
-                                    IconLeftWidget:
-                                        icon: "language-python"
-                                ThreeLineIconListItem:
-                                    text: "Three-line item with avatar"
-                                    secondary_text: "Secondary text here"
-                                    tertiary_text: "fit more text than usual"
-
-                                    IconLeftWidget:
-                                        icon: "language-python"
-                                ThreeLineIconListItem:
-                                    text: "Three-line item with avatar"
-                                    secondary_text: "Secondary text here"
-                                    tertiary_text: "fit more text than usual"
-
-                                    IconLeftWidget:
-                                        icon: "language-python"
-
-                   
-    #Manages the content of the drawer
         MDNavigationDrawer:
             id: nav_drawer
             orientation: "vertical"
@@ -229,6 +188,10 @@ windowManager:
                     OneLineListItem:
                         id: menuitem4
                         text: "Test Line Item #4"
+
+
+                   
+
             
 
   
@@ -244,25 +207,38 @@ windowManager:
 
 
 <displayWindow>:
-    MDFloatLayout:
+    departure:departure
+    MDBoxLayout:
+        departure:departure
         orientation: "vertical"
-        size: root.width, root.height
+        MDCard:
+            
+            MapView:
+                id: displayview
+                zoom: 5
+        MDCard:
+            departure:departure
+            orientation: "vertical"
+            MDLabel:
+                id: destination
+                text: "Text goes here"
+            MDLabel:
+                id: departure
+                text: "Text goes here"
+            MDLabel:
+                id: estimation
+                text: "Text goes here"
+            Button:
+                text : "GO BACK"
+                #size_hint : 0.3, 0.2
+                #pos_hint : {"x" : 0.35, "top" : 0.18}
+                on_press :
+                    root.manager.transition.direction = "down"
+                    app.root.current = 'logdata'
 
-        Label:
-            text : "EMAIL: "
-            size_hint : 0.2, 0.1
-            pos_hint : {"x":0.4, "top":0.9}
-        TextInput:
-            id : email
-            multiline :False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.8}
 
-        Button:
-            text : "GO BACK"
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.18}
-            on_press :
-                root.manager.transition.direction = "down"
-                app.root.current = 'logdata'
 
+<customRide>
+    #token : token
+    on_release:
+        app.root.current = 'display'
