@@ -128,14 +128,6 @@ windowManager:
                                     Button:
                                         on_release:
                                             print("hey")
-
-                            MDToolbar:
-                                Button:
-                                    text: "Longitude: {}".format(mapview.lon)
-                                    on_release: mapview.center_on(50.6394, 3.057)
-                                Button:
-                                    text: "Latitude: {}".format(mapview.lat)
-                                    on_release: mapview.center_on(-33.867, 151.206)
                     MDCard:
                         MDFloatLayout:
                             orientation: "vertical"
