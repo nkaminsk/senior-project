@@ -5,6 +5,8 @@ windowManager:
     signupWindow:
     logDataWindow:
     displayWindow:
+    editWindow:
+    profileWindow:
  
 # GUI for the login window
 <loginWindow>:
@@ -168,18 +170,23 @@ windowManager:
                     OneLineListItem:
                         id: menuitem1
                         text: "View Profile"
-                        on_release: 
+                        on_release:
                             root.manager.transition.direction = "up"
-                            app.root.current = 'display'
+                            app.root.current = 'profile_window'
                     OneLineListItem:
                         id: menuitem2
                         text: "Edit Profile"
+                        on_release: 
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'edit_window'
                     OneLineListItem:
                         id: menuitem3
-                        text: "Test Line Item #3"
-                    OneLineListItem:
-                        id: menuitem4
-                        text: "Test Line Item #4"
+                        text: "Log Out"
+                        on_release: 
+                            nav_drawer.set_state("close")
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'login'
+                    
 
 
                    
@@ -234,3 +241,92 @@ windowManager:
     #token : token
     on_release:
         app.root.current = 'display'
+
+
+
+
+
+<profileWindow>:
+    name2 : name2
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+
+        Label:
+            text : "NAME: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        TextInput:
+            id : pwd
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.4}
+
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
+
+
+
+<editWindow>:
+    name2 : name2
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+
+        Label:
+            text : "NAME: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        TextInput:
+            id : pwd
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.4}
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'

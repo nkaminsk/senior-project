@@ -240,6 +240,14 @@ class logDataWindow(Screen):
 
 class displayWindow(Screen):
     pass
+
+
+class editWindow(Screen):
+    pass
+
+
+class profileWindow(Screen):
+    pass
   
 # class for managing screens
 class windowManager(ScreenManager):
@@ -254,7 +262,7 @@ users=pd.read_csv('login.csv')
   
 # adding screens
 
-  
+ 
 # class that builds gui
 class loginMain(MDApp):
     def __init__(self, **kwargs):
@@ -268,6 +276,8 @@ class loginMain(MDApp):
         sm.add_widget(signupWindow(name='signup'))
         sm.add_widget(logDataWindow(name='logdata'))
         sm.add_widget(displayWindow(name='display'))
+        sm.add_widget(editWindow(name='edit_window'))
+        sm.add_widget(profileWindow(name='profile_window'))
         return sm
 
   
