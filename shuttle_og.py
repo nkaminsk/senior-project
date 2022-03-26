@@ -135,6 +135,10 @@ class logDataWindow(Screen):
         "Create a ride!": "language-python"
         }
 
+    def callback(self, instance):
+        #print("GOT HERE")
+        MDApp.get_running_app().root.current = 'cride_window'
+
     latitude = NumericProperty(50) #GET COORDS
     longitude = NumericProperty(3)
 
@@ -249,6 +253,9 @@ class editWindow(Screen):
 class profileWindow(Screen):
     pass
   
+class crideWindow(Screen):
+    pass
+
 # class for managing screens
 class windowManager(ScreenManager):
     pass
@@ -278,6 +285,7 @@ class loginMain(MDApp):
         sm.add_widget(displayWindow(name='display'))
         sm.add_widget(editWindow(name='edit_window'))
         sm.add_widget(profileWindow(name='profile_window'))
+        sm.add_widget(crideWindow(name='cride_window'))
         return sm
 
   

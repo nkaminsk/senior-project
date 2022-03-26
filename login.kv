@@ -7,6 +7,7 @@ windowManager:
     displayWindow:
     editWindow:
     profileWindow:
+    crideWindow:
  
 # GUI for the login window
 <loginWindow>:
@@ -147,6 +148,7 @@ windowManager:
                             MDFloatingActionButtonSpeedDial:
                                 data: root.data
                                 root_button_anim: True
+                                callback: root.callback
                     
 
         MDNavigationDrawer:
@@ -211,7 +213,6 @@ windowManager:
         departure:departure
         orientation: "vertical"
         MDCard:
-            
             MapView:
                 id: displayview
                 zoom: 5
@@ -291,6 +292,49 @@ windowManager:
 
 
 <editWindow>:
+    name2 : name2
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+
+        Label:
+            text : "NAME: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        TextInput:
+            id : pwd
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.4}
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
+
+
+
+<crideWindow>:
     name2 : name2
     email : email
     pwd : pwd
