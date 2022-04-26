@@ -1,0 +1,408 @@
+
+# there are three screens
+windowManager:
+    loginWindow:
+    signupWindow:
+    logDataWindow:
+    displayWindow:
+    editWindow:
+    profileWindow:
+    crideWindow:
+ 
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: searchdestination
+        hint_text: "Destination Address"
+
+# GUI for the login window
+<loginWindow>:
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : email
+            multiline :False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : pwd
+            multiline :False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Button:
+            text : "Create an account"
+            size_hint : 0.4, 0.1
+            pos_hint : {"x" : 0.3, "top" : 0.4}
+            on_release:
+                #root.search_menu.open()
+                app.root.current = 'signup'
+                root.manager.transition.direction = "left"
+        Button:
+            text : "LOGIN"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.2}
+            on_release: 
+                root.validate()
+                root.manager.transition.direction = "up"
+  
+# GUI for the signup window
+<signupWindow>:
+    name2 : name2
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+
+        Label:
+            text : "NAME: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        TextInput:
+            id : pwd
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.4}
+        Button:
+            text : "SUBMIT"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.25}
+            on_press :
+                root.signupbtn()
+                root.manager.transition.direction = "right"
+
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.back()
+                root.manager.transition.direction = "right"
+  
+# GUI to show validation result
+<logDataWindow>:
+    #info : info
+
+    MDNavigationLayout:
+            #Manages the content of the drawer
+        
+    #Manages the primary screen data
+        ScreenManager:
+            MDScreen:
+                MDBoxLayout:
+                    orientation: "vertical"
+                    MDToolbar:
+                        title: "Kent State Travel App"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
+                    MDCard:
+                        RelativeLayout:
+                            MapView:
+                                id: mapview
+                                lat: root.latitude
+                                lon: root.longitude
+                                zoom: 12
+                                
+                         
+                    MDCard:
+                        MDFloatLayout:
+                            orientation: "vertical"
+                            ScrollView:
+                                MDList:
+                                    id: ride_list
+                                
+                                    ThreeLineIconListItem:
+                                        text: "Starting Location -> Destination"
+                                        secondary_text: "Estimated Ride Time"
+                                        tertiary_text: "Unique Ride Identification"
+
+                                        IconLeftWidget:
+                                            icon: "language-python"
+                            MDFloatingActionButtonSpeedDial:
+                                data: root.data
+                                root_button_anim: True
+                                callback: root.speed_click
+                    
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            orientation: "vertical"
+            AnchorLayout:
+                anchor_x: "left"
+                size_hint_y: None
+                height: avatar.height
+                
+                Image:
+                    id: avatar
+                    size_hint: None, None
+                    size: "56dp", "56dp"
+                    source: "data/logo/kivy-icon-256.png"
+
+            ScrollView:
+                orientation: "vertical"
+                MDList:
+                    id: nav_list
+                    OneLineListItem:
+                        id: menuitem1
+                        text: "View Profile"
+                        on_release:
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'profile_window'
+                    OneLineListItem:
+                        id: menuitem2
+                        text: "Edit Profile"
+                        on_release: 
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'edit_window'
+                    OneLineListItem:
+                        id: menuitem3
+                        text: "Log Out"
+                        on_release: 
+                            nav_drawer.set_state("close")
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'login'
+                    
+
+
+                   
+
+            
+
+  
+  
+# GUI for pop up window
+<P>:
+    Label:
+        text : "Please enter valid information"
+        size_hint : 0.2, 0.1
+        pos_hint : {"x" : 0.3, "top" : 0.8}
+
+
+
+
+<displayWindow>:
+    departure:departure
+    MDBoxLayout:
+        departure:departure
+        orientation: "vertical"
+        MDCard:
+            MapView:
+                id: displayview
+                zoom: 10
+        MDCard:
+            departure:departure
+            orientation: "vertical"
+            MDLabel:
+                id: token
+                text: "Token:  "
+                size_hint : 0.2, 0.1
+                #pos_hint : {"x":0.4, "top":0.9}
+            MDLabel:
+                id: name
+                text: "Departing: "
+                multiline : False
+                size_hint : 0.2, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.85}
+            MDLabel:
+                id: departure
+                text: "Arriving: "
+                size_hint : 0.2, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.7}
+            MDLabel:
+                id: email
+                text: "Price: "
+                size_hint : 0.2, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.65}
+            MDLabel:
+                id: estimation
+                text: "Estinated Time of arrival: "
+                size_hint : 0.2, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.5}
+      
+            Button:
+                text : "GO BACK"
+                size_hint : 0.3, 0.05
+                pos_hint : {"x" : 0.35}
+                on_press :
+                    root.manager.transition.direction = "down"
+                    app.root.current = 'logdata'
+
+
+
+<customRide>
+    #token : token
+    on_release:
+        app.root.current = 'display'
+
+
+
+
+
+<profileWindow>:
+    
+    MDFloatLayout:
+
+        Label:
+            text: "Name: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        Label:
+            id: name
+            multiline : False
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.85}
+        Label:
+            text: "Email: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        Label:
+            id: email
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.65}
+        Label:
+            text: "Token: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        
+        Label:
+            id: token
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.45}
+        
+
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
+
+
+
+<editWindow>:
+    name2 : name2
+    email : email
+    pwd : pwd
+    MDFloatLayout:
+
+        Label:
+            text : "NAME: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.8}
+        Label:
+            text : "EMAIL: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.7}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.6}
+        Label:
+            text : "PASSWORD: "
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.5}
+        TextInput:
+            id : pwd
+            multiline : False
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.4}
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.1
+            pos_hint : {"x" : 0.35, "top" : 0.18}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
+
+
+
+<crideWindow>:
+  
+    MDFloatLayout:
+
+        Label:
+            text : "DESTINATION"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x":0.4, "top":0.9}
+        TextInput:
+            id : name2
+            multiline : False
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.85}
+        Label:
+            text : "RIDE PRICE"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.4, "top" : 0.75}
+        TextInput:
+            id : email
+            multiline : False
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.7}
+        Label:
+            text : "WHEN TO LEAVE"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.4, "top" : 0.6}
+        MDRaisedButton:
+            id: timepick
+            text: "Open time picker"
+            pos_hint : {"x" : 0.4, "top" : 0.55}
+            on_release: root.show_time_picker()
+        #TextInput:
+            #id : pwd
+            #multiline : False
+            #size_hint : 0.3, 0.05
+            #pos_hint : {"x" : 0.35, "top" : 0.55}
+        Button:
+            text : "GO BACK"
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.2}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
+
+        Button:
+            text : "CREATE RIDE"
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.3}
+            on_press :
+                root.manager.transition.direction = "down"
+                app.root.current = 'logdata'
