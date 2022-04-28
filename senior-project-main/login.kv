@@ -9,6 +9,43 @@ windowManager:
     profileWindow:
     crideWindow:
  
+<Content>
+    orientation: "vertical"
+    spacing: "12dp"
+    size_hint_y: None
+    height: "120dp"
+
+    MDTextField:
+        id: searchdestination
+        hint_text: "Destination Address"
+
+
+
+<GpsBlinker>:
+    default_blink_size: 25
+    blink_size: 25
+    source: 'marker.png'
+    outer_opacity: 1
+ 
+    canvas.before:
+        # Outer circle
+        Color:
+            rgba: app.theme_cls.primary_color[:3] + [root.outer_opacity]
+ 
+        RoundedRectangle:
+            radius: [root.blink_size/2.0, ]
+            size: [root.blink_size, root.blink_size]
+            pos: [root.pos[0] + root.size[0]/2.0 - root.blink_size/2.0, root.pos[1] + root.size[1]/2.0 - root.blink_size/2.0]
+ 
+        # Inner Circle
+        Color:
+            rgb: 1,1,1
+        RoundedRectangle:
+            radius: [root.default_blink_size/2.0, ]
+            size: [root.default_blink_size, root.default_blink_size]
+            pos: [root.pos[0] + root.size[0]/2.0 - root.default_blink_size/2.0, root.pos[1] + root.size[1]/2.0 - root.default_blink_size/2.0]
+
+
 # GUI for the login window
 <loginWindow>:
     email : email
@@ -39,7 +76,8 @@ windowManager:
             text : "Create an account"
             size_hint : 0.4, 0.1
             pos_hint : {"x" : 0.3, "top" : 0.4}
-            on_release: 
+            on_release:
+                #root.search_menu.open()
                 app.root.current = 'signup'
                 root.manager.transition.direction = "left"
         Button:
@@ -113,7 +151,7 @@ windowManager:
                 MDBoxLayout:
                     orientation: "vertical"
                     MDToolbar:
-                        title: "Navigation Drawer Test"
+                        title: "Kent State Travel App"
                         elevation: 10
                         left_action_items: [['menu', lambda x: nav_drawer.set_state("open")]]
                     MDCard:
@@ -122,15 +160,10 @@ windowManager:
                                 id: mapview
                                 lat: root.latitude
                                 lon: root.longitude
-                                zoom: 5
-                            
-                                MapMarkerPopup:
-                                    source: "marker.png"
-                                    lat: 11
-                                    lon: 11
-                                    Button:
-                                        on_release:
-                                            print("hey")
+                                zoom: 12
+                                
+                                
+                         
                     MDCard:
                         MDFloatLayout:
                             orientation: "vertical"
@@ -139,16 +172,16 @@ windowManager:
                                     id: ride_list
                                 
                                     ThreeLineIconListItem:
-                                        text: "Three-line item with avatar"
-                                        secondary_text: "Secondary text here"
-                                        tertiary_text: "fit more text than usual"
+                                        text: "Starting Location -> Destination"
+                                        secondary_text: "Estimated Ride Time"
+                                        tertiary_text: "Unique Ride Identification"
 
                                         IconLeftWidget:
                                             icon: "language-python"
                             MDFloatingActionButtonSpeedDial:
                                 data: root.data
                                 root_button_anim: True
-                                callback: root.callback
+                                callback: root.speed_click
                     
 
         MDNavigationDrawer:
@@ -215,26 +248,49 @@ windowManager:
         MDCard:
             MapView:
                 id: displayview
-                zoom: 5
+                zoom: 15
         MDCard:
             departure:departure
             orientation: "vertical"
             MDLabel:
-                id: destination
-                text: "Text goes here"
+                id: token
+                text: "Token:  "
+                size_hint : 1, 0.1
+                #pos_hint : {"x":0.4, "top":0.9}
+            MDLabel:
+                id: name
+                text: "Departing: "
+                multiline : False
+                size_hint : 1, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.85}
             MDLabel:
                 id: departure
-                text: "Text goes here"
+                text: "Arriving: "
+                size_hint : 1, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.7}
+            MDLabel:
+                id: price
+                text: "Price: "
+                size_hint : 1, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.65}
             MDLabel:
                 id: estimation
-                text: "Text goes here"
+                text: "Estinated Time of arrival: "
+                size_hint : 1, 0.1
+                #pos_hint : {"x" : 0.4, "top" : 0.5}
+      
             Button:
                 text : "GO BACK"
-                #size_hint : 0.3, 0.2
-                #pos_hint : {"x" : 0.35, "top" : 0.18}
+                size_hint : 0.5, 0.05
+                pos_hint : {"x" : 0.35}
                 on_press :
                     root.manager.transition.direction = "down"
                     app.root.current = 'logdata'
+            Button:
+                text : "SIGN UP"
+                size_hint : 0.5, 0.05
+                pos_hint : {"x" : 0.35}
+                on_press : root.sign_up()
 
 
 
@@ -248,38 +304,36 @@ windowManager:
 
 
 <profileWindow>:
-    name2 : name2
-    email : email
-    pwd : pwd
+    
     MDFloatLayout:
 
         Label:
-            text : "NAME: "
+            text: "Name: "
             size_hint : 0.2, 0.1
             pos_hint : {"x":0.4, "top":0.9}
-        TextInput:
-            id : name2
-            multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.8}
         Label:
-            text : "EMAIL: "
+            id: name
+            multiline : False
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.85}
+        Label:
+            text: "Email: "
             size_hint : 0.2, 0.1
             pos_hint : {"x" : 0.4, "top" : 0.7}
-        TextInput:
-            id : email
-            multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.6}
         Label:
-            text : "PASSWORD: "
+            id: email
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.65}
+        Label:
+            text: "Token: "
             size_hint : 0.2, 0.1
             pos_hint : {"x" : 0.4, "top" : 0.5}
-        TextInput:
-            id : pwd
-            multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.4}
+        
+        Label:
+            id: token
+            size_hint : 0.2, 0.1
+            pos_hint : {"x" : 0.4, "top" : 0.45}
+        
 
         Button:
             text : "GO BACK"
@@ -335,42 +389,54 @@ windowManager:
 
 
 <crideWindow>:
-    name2 : name2
-    email : email
-    pwd : pwd
+  
     MDFloatLayout:
 
         Label:
-            text : "NAME: "
-            size_hint : 0.2, 0.1
+            text : "DESTINATION"
+            size_hint : 0.2, 0.05
             pos_hint : {"x":0.4, "top":0.9}
         TextInput:
-            id : name2
+            id : destination
             multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.8}
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.85}
         Label:
-            text : "EMAIL: "
-            size_hint : 0.2, 0.1
-            pos_hint : {"x" : 0.4, "top" : 0.7}
+            text : "RIDE PRICE"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.4, "top" : 0.75}
         TextInput:
-            id : email
+            id : rideprice
             multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.6}
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.7}
         Label:
-            text : "PASSWORD: "
-            size_hint : 0.2, 0.1
-            pos_hint : {"x" : 0.4, "top" : 0.5}
-        TextInput:
-            id : pwd
-            multiline : False
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.4}
+            text : "WHEN TO LEAVE"
+            size_hint : 0.2, 0.05
+            pos_hint : {"x" : 0.4, "top" : 0.6}
+        MDRaisedButton:
+            id: timepick
+            text: "Open time picker"
+            pos_hint : {"x" : 0.4, "top" : 0.55}
+            on_release: root.show_time_picker()
+        #TextInput:
+            #id : pwd
+            #multiline : False
+            #size_hint : 0.3, 0.05
+            #pos_hint : {"x" : 0.35, "top" : 0.55}
         Button:
             text : "GO BACK"
-            size_hint : 0.3, 0.1
-            pos_hint : {"x" : 0.35, "top" : 0.18}
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.2}
             on_press :
                 root.manager.transition.direction = "down"
                 app.root.current = 'logdata'
+
+        Button:
+            text : "CREATE RIDE"
+            size_hint : 0.3, 0.05
+            pos_hint : {"x" : 0.35, "top" : 0.3}
+            on_press :
+                root.create_ride()
+                root.manager.transition.direction = "down"
+                #app.root.current = 'logdata'
