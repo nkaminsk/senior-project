@@ -282,11 +282,19 @@ class logDataWindow(Screen):
         api_key = apikey_
         address = parse.quote(address)
         url = "https://geocoder.ls.hereapi.com/6.2/geocode.json?searchtext=%s&apiKey=%s"%(address, api_key)
+
+        test1 = "https://revgeocode.search.hereapi.com/v1/revgeocode?at=%s,%s&lang=en-US&apiKey=%s"%(str(36),str(-115), api_key)
+        test2 = UrlRequest(test1, on_success=self.parse_test, on_failure=self.failure, on_error=self.error)
+        #print(test2)
+
         try:
             test = UrlRequest(url, on_success=self.success, on_failure=self.failure, on_error=self.error)
             print (test)
         except Exception as e:
             print(e)
+
+    def parse_test(self, urlrequest, result):
+        print(result)
 
     def error(self, urlrequest, result):
         print("Error")
@@ -449,7 +457,7 @@ class logDataWindow(Screen):
         #self.ids.estimation.text = text
         token = text[7:]
         display_screen = MDApp.get_running_app().root.get_screen('display')
-        ride_data = self.rides.loc[(self.rides.Token == int(token))]
+        ride_data = self.rides.loc[(self.rides.Token == str(token))]
         # :: token | name | destination | depart | ETA | coordx | coordy
         #print(token)
         #print(ride_data)
@@ -472,6 +480,28 @@ class logDataWindow(Screen):
 
 
 class displayWindow(Screen):
+    def on_enter(self):
+        #do stuff
+        self.token = self.ids.token.text
+
+        self.rides = pd.read_csv("ride_data.csv")
+
+        ride_data = self.rides.loc[(self.rides.Token == str(self.token))]
+
+        print(ride_data)
+        print(ride_data.values[0][0])
+        print(ride_data.values[0][1])
+        print(ride_data.values[0][2])
+        print(ride_data.values[0][3])
+        print(ride_data.values[0][4])
+        print(ride_data.values[0][5])
+        print(ride_data.values[0][6])
+        print(ride_data.values[0][7])
+        print(ride_data.values[0][8])
+
+
+        print(self.token)
+        pass
     pass
 
 
