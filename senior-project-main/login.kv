@@ -19,6 +19,33 @@ windowManager:
         id: searchdestination
         hint_text: "Destination Address"
 
+
+
+<GpsBlinker>:
+    default_blink_size: 25
+    blink_size: 25
+    source: 'marker.png'
+    outer_opacity: 1
+ 
+    canvas.before:
+        # Outer circle
+        Color:
+            rgba: app.theme_cls.primary_color[:3] + [root.outer_opacity]
+ 
+        RoundedRectangle:
+            radius: [root.blink_size/2.0, ]
+            size: [root.blink_size, root.blink_size]
+            pos: [root.pos[0] + root.size[0]/2.0 - root.blink_size/2.0, root.pos[1] + root.size[1]/2.0 - root.blink_size/2.0]
+ 
+        # Inner Circle
+        Color:
+            rgb: 1,1,1
+        RoundedRectangle:
+            radius: [root.default_blink_size/2.0, ]
+            size: [root.default_blink_size, root.default_blink_size]
+            pos: [root.pos[0] + root.size[0]/2.0 - root.default_blink_size/2.0, root.pos[1] + root.size[1]/2.0 - root.default_blink_size/2.0]
+
+
 # GUI for the login window
 <loginWindow>:
     email : email
@@ -135,6 +162,7 @@ windowManager:
                                 lon: root.longitude
                                 zoom: 12
                                 
+                                
                          
                     MDCard:
                         MDFloatLayout:
@@ -220,7 +248,7 @@ windowManager:
         MDCard:
             MapView:
                 id: displayview
-                zoom: 10
+                zoom: 15
         MDCard:
             departure:departure
             orientation: "vertical"
@@ -364,7 +392,7 @@ windowManager:
             size_hint : 0.2, 0.05
             pos_hint : {"x":0.4, "top":0.9}
         TextInput:
-            id : name2
+            id : destination
             multiline : False
             size_hint : 0.3, 0.05
             pos_hint : {"x" : 0.35, "top" : 0.85}
@@ -373,7 +401,7 @@ windowManager:
             size_hint : 0.2, 0.05
             pos_hint : {"x" : 0.4, "top" : 0.75}
         TextInput:
-            id : email
+            id : rideprice
             multiline : False
             size_hint : 0.3, 0.05
             pos_hint : {"x" : 0.35, "top" : 0.7}
@@ -404,5 +432,6 @@ windowManager:
             size_hint : 0.3, 0.05
             pos_hint : {"x" : 0.35, "top" : 0.3}
             on_press :
+                root.create_ride()
                 root.manager.transition.direction = "down"
-                app.root.current = 'logdata'
+                #app.root.current = 'logdata'
