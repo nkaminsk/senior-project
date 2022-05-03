@@ -1,7 +1,7 @@
 # import all the relevant classes
-from os import scandir
-import pkg_resources
-from subprocess import call
+#from os import scandir
+#import pkg_resources
+#from subprocess import call
 
 #packages = [dist.project_name for dist in pkg_resources.working_set]
 #call("pip install --upgrade " + ' '.join(packages), shell=True)
@@ -268,14 +268,14 @@ class logDataWindow(Screen):
     displayList = []
     schedule = None
     data = {
-        "Create a ride!": "language-python",
-        "Search!": "language-ruby"
+        "Create a ride!": "car",
+        "Search!": "magnify"
         }
 
     def speed_click(self, instance):
-        if (instance.icon == 'language-ruby'):
+        if (instance.icon == 'magnify'):
             self.dialog.open()
-        if (instance.icon == 'language-python'):
+        if (instance.icon == 'car'):
             sm.current = 'cride_window'
 
     def speed_dial_click():
@@ -326,8 +326,8 @@ class logDataWindow(Screen):
             pass
 
 
-    latitude = NumericProperty(50) #GET COORDS
-    longitude = NumericProperty(50)
+    latitude = NumericProperty(55) #GET COORDS
+    longitude = NumericProperty(55)
 
     def decimal_precision(self, val, precision):
         # foo process
@@ -757,7 +757,7 @@ class windowManager(ScreenManager):
     pass
   
 # kv file
-#kv = Builder.load_file('login.kv')
+#kv = Builder.load_file('log.kv')
 sm = windowManager()
   
 # reading all the data stored
